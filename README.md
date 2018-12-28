@@ -7,7 +7,7 @@ from http://code.google.com/p/php-excel-reader/ which, sadly, has memory issues 
 data all at once and keeps it all in memory.
 
 ### Requirements:
-*  PHP 5.3.0 or newer
+*  PHP 5.4.0 or newer
 *  PHP must have Zip file support (see http://php.net/manual/en/zip.installation.php)
 
 ### Usage:

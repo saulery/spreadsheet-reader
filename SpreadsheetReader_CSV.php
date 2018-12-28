@@ -9,10 +9,10 @@
 		/**
 		 * @var array Options array, pre-populated with the default values.
 		 */
-		private $Options = array(
+		private $Options = [
 			'Delimiter' => ';',
 			'Enclosure' => '"'
-		);
+		];
 
 		private $Encoding = 'UTF-8';
 		private $BOMLength = 0;
@@ -131,7 +131,7 @@
 		 */
 		public function Sheets()
 		{
-			return array(0 => basename($this -> Filepath));
+			return [0 => basename($this -> Filepath)];
 		}
 
 		/**
@@ -185,7 +185,7 @@
 		 */ 
 		public function next()
 		{
-			$this -> CurrentRow = array();
+			$this -> CurrentRow = [];
 
 			// Finding the place the next line starts for UTF-16 encoded files
 			// Line breaks could be 0x0D 0x00 0x0A 0x00 and PHP could split lines on the

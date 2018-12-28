@@ -6,10 +6,10 @@
  */
 	class SpreadsheetReader_ODS implements Iterator, Countable
 	{
-		private $Options = array(
+		private $Options = [
 			'TempDir' => '',
 			'ReturnDateTimeObjects' => false
-		);
+		];
 
 		/**
 		 * @var string Path to temporary content file
@@ -107,7 +107,7 @@
 		{
 			if ($this -> Sheets === false)
 			{
-				$this -> Sheets = array();
+				$this -> Sheets = [];
 
 				if ($this -> Valid)
 				{
@@ -200,7 +200,7 @@
 		{
 			$this -> Index++;
 
-			$this -> CurrentRow = array();
+			$this -> CurrentRow = [];
 
 			if (!$this -> TableOpen)
 			{

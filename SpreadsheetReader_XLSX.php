@@ -22,14 +22,14 @@
 		 */
 		const SHARED_STRING_CACHE_LIMIT = 50000;
 
-		private $Options = array(
+		private $Options = [
 			'TempDir' => '',
 			'ReturnDateTimeObjects' => false
-		);
+		];
 
-		private static $RuntimeInfo = array(
+		private static $RuntimeInfo = [
 			'GMPSupported' => false
-		);
+		];
 
 		private $Valid = false;
 
@@ -60,7 +60,7 @@
 		/**
 		 * @var array Shared strings cache, if the number of shared strings is low enough
 		 */
-		private $SharedStringCache = array();
+		private $SharedStringCache = [];
 
 		// Workbook data
 		/**
@@ -76,10 +76,10 @@
 		/**
 		 * @var array Container for cell value style data
 		 */
-		private $Styles = array();
+		private $Styles = [];
 
 		private $TempDir = '';
-		private $TempFiles = array();
+		private $TempFiles = [];
 
 		private $CurrentRow = false;
 
@@ -103,7 +103,7 @@
 		private $SSOpen = false;
 		private $SSForwarded = false;
 
-		private static $BuiltinFormats = array(
+		private static $BuiltinFormats = [
 			0 => '',
 			1 => '0',
 			2 => '0.00',
@@ -152,11 +152,11 @@
 			68 => 't0.00%',
 			69 => 't# ?/?',
 			70 => 't# ??/??'
-		);
-		private $Formats = array();
+		];
+		private $Formats = [];
 
-		private static $DateReplacements = array(
-			'All' => array(
+		private static $DateReplacements = [
+			'All' => [
 				'\\' => '',
 				'am/pm' => 'A',
 				'yyyy' => 'Y',
@@ -173,16 +173,16 @@
 				'd' => 'j',
 				'ss' => 's',
 				'.s' => ''
-			),
-			'24H' => array(
+			],
+			'24H' => [
 				'hh' => 'H',
 				'h' => 'G'
-			),
-			'12H' => array(
+			],
+			'12H' => [
 				'hh' => 'h',
 				'h' => 'G'
-			)
-		);
+			]
+		];
 
 		private static $BaseDate = false;
 		private static $DecimalSeparator = '.';
@@ -192,7 +192,7 @@
 		/**
 		 * @var array Cache for already processed format strings
 		 */
-		private $ParsedFormatCache = array();
+		private $ParsedFormatCache = [];
 
 		/**
 		 * @param string Path to file
@@ -367,7 +367,7 @@
 		{
 			if ($this -> Sheets === false)
 			{
-				$this -> Sheets = array();
+				$this -> Sheets = [];
 				foreach ($this -> WorkbookXML -> sheets -> sheet as $Index => $Sheet)
 				{
 					$Attributes = $Sheet -> attributes('r', true);
@@ -631,7 +631,7 @@
 				return $this -> GeneralFormat($Value);
 			}
 
-			$Format = array();
+			$Format = [];
 
 			if (isset($this -> ParsedFormatCache[$Index]))
 			{
@@ -640,13 +640,13 @@
 
 			if (!$Format)
 			{
-				$Format = array(
+				$Format = [
 					'Code' => false,
 					'Type' => false,
 					'Scale' => 1,
 					'Thousands' => false,
 					'Currency' => false
-				);
+				];
 
 				if (isset(self::$BuiltinFormats[$Index]))
 				{
@@ -721,22 +721,22 @@
 					// Removing unnecessary escaping
 					$Format['Code'] = preg_replace("{\\\\}", '', $Format['Code']);
 					// Removing string quotes
-					$Format['Code'] = str_replace(array('"', '*'), '', $Format['Code']);
+					$Format['Code'] = str_replace(['"', '*'], '', $Format['Code']);
 					// Removing thousands separator
 					if (strpos($Format['Code'], '0,0') !== false || strpos($Format['Code'], '#,#') !== false)
 					{
 						$Format['Thousands'] = true;
 					}
-					$Format['Code'] = str_replace(array('0,0', '#,#'), array('00', '##'), $Format['Code']);
+					$Format['Code'] = str_replace(['0,0', '#,#'], ['00', '##'], $Format['Code']);
 
 					// Scaling (Commas indicate the power)
 					$Scale = 1;
-					$Matches = array();
+					$Matches = [];
 					if (preg_match('{(0|#)(,+)}', $Format['Code'], $Matches))
 					{
 						$Scale = pow(1000, strlen($Matches[2]));
 						// Removing the commas
-						$Format['Code'] = preg_replace(array('{0,+}', '{#,+}'), array('0', '#'), $Format['Code']);
+						$Format['Code'] = preg_replace(['{0,+}', '{#,+}'], ['0', '#'], $Format['Code']);
 					}
 
 					$Format['Scale'] = $Scale;
@@ -749,7 +749,7 @@
 					{
 						$Format['Code'] = str_replace('#', '', $Format['Code']);
 
-						$Matches = array();
+						$Matches = [];
 						if (preg_match('{(0+)(\.?)(0*)}', preg_replace('{\[[^\]]+\]}', '', $Format['Code']), $Matches))
 						{
 							$Integer = $Matches[1];
@@ -763,7 +763,7 @@
 						}
 					}
 
-					$Matches = array();
+					$Matches = [];
 					if (preg_match('{\[\$(.*)\]}u', $Format['Code'], $Matches))
 					{
 						$CurrFormat = $Matches[0];
@@ -988,7 +988,7 @@
 		{
 			$this -> Index++;
 
-			$this -> CurrentRow = array();
+			$this -> CurrentRow = [];
 
 			if (!$this -> RowOpen)
 			{
@@ -1158,7 +1158,7 @@
 		 */
 		public static function IndexFromColumnLetter($Letter)
 		{
-			$Powers = array();
+			$Powers = [];
 
 			$Letter = strtoupper($Letter);
 

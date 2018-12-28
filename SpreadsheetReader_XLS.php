@@ -9,8 +9,7 @@
 		/**
 		 * @var array Options array, pre-populated with the default values.
 		 */
-		private $Options = array(
-		);
+		private $Options = [];
 
 		/**
 		 * @var resource File handle
@@ -25,7 +24,7 @@
 		 * @var array Sheet information
 		 */
 		private $Sheets = false;
-		private $SheetIndexes = array();
+		private $SheetIndexes = [];
 
 		/**
 		 * @var int Current sheet index
@@ -35,7 +34,7 @@
 		/**
 		 * @var array Content of the current row
 		 */
-		private $CurrentRow = array();
+		private $CurrentRow = [];
 
 		/**
 		 * @var int Column count in the sheet
@@ -50,7 +49,7 @@
 		 * @var array Template to use for empty rows. Retrieved rows are merged
 		 *	with this so that empty cells are added, too
 		 */
-		private $EmptyRow = array();
+		private $EmptyRow = [];
 
 		/**
 		 * @param string Path to file
@@ -98,7 +97,7 @@
 		{
 			if ($this -> Sheets === false)
 			{
-				$this -> Sheets = array();
+				$this -> Sheets = [];
 				$this -> SheetIndexes = array_keys($this -> Handle -> sheets);
 
 				foreach ($this -> SheetIndexes as $SheetIndex)
@@ -142,7 +141,7 @@
 				}
 				else
 				{
-					$this -> EmptyRow = array();
+					$this -> EmptyRow = [];
 				}
 			}
 
@@ -199,14 +198,14 @@
 
 			if ($this -> Error)
 			{
-				return array();
+				return [];
 			}
 			elseif (isset($this -> Handle -> sheets[$this -> CurrentSheet]['cells'][$this -> Index]))
 			{
 				$this -> CurrentRow = $this -> Handle -> sheets[$this -> CurrentSheet]['cells'][$this -> Index];
 				if (!$this -> CurrentRow)
 				{
-					return array();
+					return [];
 				}
 
 				$this -> CurrentRow = $this -> CurrentRow + $this -> EmptyRow;

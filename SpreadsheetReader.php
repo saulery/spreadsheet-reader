@@ -12,10 +12,10 @@
 		const TYPE_CSV = 'CSV';
 		const TYPE_ODS = 'ODS';
 
-		private $Options = array(
+		private $Options = [
 			'Delimiter' => '',
 			'Enclosure' => '"'
-		);
+		];
 
 		/**
 		 * @var int Current row in the file
@@ -25,7 +25,7 @@
 		/**
 		 * @var SpreadsheetReader_* Handle for the reader object
 		 */
-		private $Handle = array();
+		private $Handle = [];
 
 		/**
 		 * @var TYPE_* Type of the contained spreadsheet
@@ -94,7 +94,7 @@
 				case 'application/xlt':
 				case 'application/x-xls':
 					// Excel does weird stuff
-					if (in_array($Extension, array('csv', 'tsv', 'txt')))
+					if (in_array($Extension, ['csv', 'tsv', 'txt']))
 					{
 						$this -> Type = self::TYPE_CSV;
 					}
@@ -216,7 +216,7 @@
 		 */
 		private static function Load($Type)
 		{
-			if (!in_array($Type, array(self::TYPE_XLSX, self::TYPE_XLS, self::TYPE_CSV, self::TYPE_ODS)))
+			if (!in_array($Type, [self::TYPE_XLSX, self::TYPE_XLS, self::TYPE_CSV, self::TYPE_ODS]))
 			{
 				throw new Exception('SpreadsheetReader: Invalid type ('.$Type.')');
 			}
