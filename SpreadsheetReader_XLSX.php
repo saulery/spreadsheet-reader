@@ -940,7 +940,8 @@
 		/** 
 		 * Rewind the Iterator to the first element.
 		 * Similar to the reset() function for arrays in PHP
-		 */ 
+		 */
+		#[\ReturnTypeWillChange]
 		public function rewind()
 		{
 			// Removed the check whether $this -> Index == 0 otherwise ChangeSheet doesn't work properly
@@ -974,6 +975,7 @@
 		 *
 		 * @return mixed current element from the collection
 		 */
+		#[\ReturnTypeWillChange]
 		public function current()
 		{
 			if ($this -> Index == 0 && $this -> CurrentRow === false)
@@ -988,6 +990,7 @@
 		 * Move forward to next element. 
 		 * Similar to the next() function for arrays in PHP 
 		 */ 
+		#[\ReturnTypeWillChange]
 		public function next()
 		{
 			$this -> Index++;
@@ -1127,6 +1130,7 @@
 		 *
 		 * @return mixed either an integer or a string
 		 */ 
+		#[\ReturnTypeWillChange]
 		public function key()
 		{
 			return $this -> Index;
@@ -1138,6 +1142,7 @@
 		 *
 		 * @return boolean FALSE if there's nothing more to iterate over
 		 */ 
+		#[\ReturnTypeWillChange]
 		public function valid()
 		{
 			return $this -> Valid;
@@ -1148,6 +1153,7 @@
 		 * Ostensibly should return the count of the contained items but this just returns the number
 		 * of rows read so far. It's not really correct but at least coherent.
 		 */
+		#[\ReturnTypeWillChange]
 		public function count()
 		{
 			return $this -> Index + 1;
