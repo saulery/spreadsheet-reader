@@ -956,12 +956,16 @@
 				$this -> Worksheet = new XMLReader;
 			}
 
-			$this -> Worksheet -> open($this -> WorksheetPath);
-
-			$this -> Valid = true;
+			$this -> Valid = false;
 			$this -> RowOpen = false;
 			$this -> CurrentRow = false;
 			$this -> Index = 0;
+
+			if ($this -> WorksheetPath)
+			{
+				$this -> Worksheet -> open($this -> WorksheetPath);
+				$this -> Valid = true;
+			}
 		}
 
 		/**

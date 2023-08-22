@@ -64,7 +64,7 @@
 				echo $Key.': ';
 				if ($Row)
 				{
-					print_r($Row);
+					var_dump($Row);
 				}
 				else
 				{
