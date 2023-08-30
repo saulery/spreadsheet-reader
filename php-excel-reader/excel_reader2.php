@@ -94,6 +94,17 @@ function v($data,$pos) {
 
 class OLERead {
 	var $data = '';
+	var $numBigBlockDepotBlocks;
+	var $sbdStartBlock;
+	var $rootStartBlock;
+	var $extensionBlock;
+	var $numExtensionBlocks;
+	var $bigBlockChain;
+	var $smallBlockChain;
+	var $entry;
+	var $props;
+	var $rootentry;
+	var $wrkbook;
 
 	function read($sFileName){
 		// check if file exist and is readable (Darko Miljanovic)
@@ -309,6 +320,10 @@ define('SPREADSHEET_EXCEL_READER_DEF_NUM_FORMAT',	"%s");
 * Main Class
 */
 class Spreadsheet_Excel_Reader {
+	var $version;
+	var $store_extended_info;
+	var $sn;
+	var $nineteenFour;
 
 	// MK: Added to make data retrieval easier
 	var $colnames = [];
@@ -541,7 +556,7 @@ class Spreadsheet_Excel_Reader {
 		}
 		return null;
 	}
-	function fontProperty($row,$col,$sheet=0,$prop) {
+	function fontProperty($row,$col,$sheet=0,$prop=0) {
 		$font = $this->fontRecord($row,$col,$sheet);
 		if ($font!=null) {
 			return $font[$prop];
@@ -559,7 +574,7 @@ class Spreadsheet_Excel_Reader {
 		$ci = $this->fontProperty($row,$col,$sheet,'color');
                 return $this->rawColor($ci);
         }
-        function rawColor($ci) {
+    function rawColor($ci) {
 		if (($ci <> 0x7FFF) && ($ci <> '')) {
 			return $this->colors[$ci];
 		}
@@ -668,6 +683,9 @@ class Spreadsheet_Excel_Reader {
 	var $_columnsFormat = [];
 	var $_rowoffset = 1;
 	var $_coloffset = 1;
+
+	var $_encoderFunction = null;
+	var $_store_extended_info = false;
 
 	/**
 	 * List of default date formats used by Excel
@@ -917,11 +935,26 @@ class Spreadsheet_Excel_Reader {
 		if ($outputEncoding != '') { 
 			$this->setOutputEncoding($outputEncoding);
 		}
-		for ($i=1; $i<245; $i++) {
-			$name = strtolower(( (($i-1)/26>=1)?chr(($i-1)/26+64):'') . chr(($i-1)%26+65));
-			$this->colnames[$name] = $i;
-			$this->colindexes[$i] = $name;
+
+		$colCtr = 0;
+		for ($i = 0; $i < 10; $i++)
+		{
+			for ($j = 1; $j <= 26; $j++)
+			{
+				$name = 
+					($i ? chr($i + 64) : ''). // First letter for double letter columns
+					chr($j + 64); // Second letter, always set
+
+				$this->colnames[$name] = ++$colCtr;
+				$this->colindexes[$i] = $name;
+
+				if ($colCtr == 244)
+				{
+					break 2;
+				}
+			}
 		}
+
 		$this->store_extended_info = $store_extended_info;
 		if ($file!="") {
 			$this->read($file);
