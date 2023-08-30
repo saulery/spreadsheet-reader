@@ -3,8 +3,8 @@
 	"description": "Spreadsheet reader library for Excel, OpenOffice and structured text files",
 	"keywords": ["spreadsheet", "xls", "xlsx", "ods", "csv", "excel", "openoffice"],
 	"homepage": "https://github.com/pilsetnieks/spreadsheet-reader",
-	"version": "0.5.12",
-	"time": "2023-08-23",
+	"version": "0.5.13",
+	"time": "2023-08-31",
 	"type": "library",
 	"license": ["MIT"],
 	"authors": [
