@@ -931,7 +931,7 @@ class Spreadsheet_Excel_Reader {
 	 */
 	function __construct($file='',$store_extended_info=true,$outputEncoding='') {
 		$this->_ole = new OLERead();
-		$this->setUTFEncoder('iconv');
+		$this->setUTFEncoder('mb');
 		if ($outputEncoding != '') { 
 			$this->setOutputEncoding($outputEncoding);
 		}
